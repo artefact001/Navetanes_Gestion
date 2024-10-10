@@ -13,17 +13,17 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();  // Primary key
-            $table->string('nom');  // User's name
-            $table->string('email')->unique();  // Unique email
-            $table->string('password');  // Hashed password
-            $table->timestamp('email_verified_at')->nullable();  // Email verification timestamp
-            $table->string('remember_token')->nullable();  // Remember me token
-            $table->string('name');  // User's display name
-            $table->timestamps();  // Created at and updated at timestamps
-        });
-
+      Schema::create('users', function (Blueprint $table) {
+    $table->id(); // Clé primaire auto-incrémentée
+    $table->string('nom'); // Champ pour le nom
+    $table->string('email')->unique(); // Champ pour l'email (unique)
+    $table->string('password'); // Champ pour le mot de passe haché
+    $table->enum('role', ['admin', 'zone', 'equipe'])->default('zone'); // Champ pour le rôle avec énumération
+    $table->timestamp('email_verified_at')->nullable(); // Champ pour la date de vérification de l'email
+    $table->string('remember_token')->nullable(); // Token pour la fonction "remember me"
+    $table->string('photo_profile')->nullable(); // Champ pour la photo de profil (nullable)
+    $table->timestamps(); // Champs 'created_at' et 'updated_at'
+});
 
     }
 

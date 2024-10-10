@@ -1,27 +1,27 @@
 <?php
-
+use App\Http\Requests\ValidationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ZoneController;
 use App\Http\Controllers\EquipeController;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\{
-    AuthController, UserController, CompetitionController, EquipeController, MatcheController, JoueurController,
+    UserController, CompetitionController, MatcheController, JoueurController,
     TirageController, ReclamationController, NotificationController, ResultatController, ClassementController,
     PointController, CalendrierController, DashboardViewController, DashboardController, StatistiqueController,
     ArticleController, CommentaireController
 };
 
 
+// Route pour inscrire une zone
+Route::post('/inscrire-zones', [ZoneController::class, 'inscrireZone']);
+Route::post('/inscrire-zones', [AuthController::class, 'inscrireZone']);
 
-
-
-
-
+// Route pour inscrire une equipe
+Route::post('/inscrire-equipe', [EquipeController::class, 'inscrireEquipe']);
+Route::post('/inscrire-equipe', [AuthController::class, 'inscrireEquipe']);
 
 
 

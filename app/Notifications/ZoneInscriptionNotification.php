@@ -1,15 +1,12 @@
 <?php
 
-
 namespace App\Notifications;
-
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 
-class ApprenantInscriptionNotification extends Notification
+class ZoneInscriptionNotification extends Notification
 {
    use Queueable;
 
@@ -39,7 +36,7 @@ class ApprenantInscriptionNotification extends Notification
     */
    public function via($notifiable)
    {
-       return ['mail','database'];
+       return ['mail'];
    }
 
 
@@ -53,7 +50,7 @@ class ApprenantInscriptionNotification extends Notification
    {
        return (new MailMessage)
            ->subject('Inscription sur la plateforme')
-           ->greeting('Bonjour ' . $this->user->prenom . ' ' . $this->user->nom . ',')
+           ->greeting('Bonjour '  . $this->user->nom . ',')
            ->line('Vous avez été inscrit avec succès sur notre plateforme.')
            ->line('Voici vos informations de connexion :')
            ->line('**Email** : ' . $this->user->email)

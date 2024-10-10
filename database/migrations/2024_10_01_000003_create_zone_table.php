@@ -16,6 +16,7 @@ class CreateZoneTable extends Migration
         Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
+            $table->string('localite');
             $table->timestamps();
         });
     }

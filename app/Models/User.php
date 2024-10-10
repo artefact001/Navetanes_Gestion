@@ -7,9 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+
 class User extends Authenticatable
 {
-    use Notifiable, HasFactory, HasRoles;
+    use Notifiable, HasFactory, HasRoles; // Utilisation du trait HasRoles de Spatie
 
     // Définit la table associée au modèle (facultatif, car Laravel le devine par convention)
     protected $table = 'users';
@@ -23,6 +24,7 @@ class User extends Authenticatable
         'nom',
         'email',
         'password',
+        'role'
     ];
 
     /**

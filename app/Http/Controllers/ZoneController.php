@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Zone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Models\User;
+use Spatie\Permission\Models\Role; // Utilise le modèle de Spatie
+use App\Notifications\ZoneInscriptionNotification;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ValidationRequest;
 
 class ZoneController extends Controller
@@ -14,9 +19,8 @@ public function inscrireZone(Request $request)
        // Validation des données
        $validator = validator($request->all(), [
            'nom' => ['required', 'string', 'max:255'],
-           'prenom' => ['required', 'string', 'max:255'],
            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-           'photo_profile' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+        //    'photo_profile' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
        ]);
 
 
@@ -37,23 +41,29 @@ public function inscrireZone(Request $request)
 
 
            // Create the user with the password
-           $password = $request->prenom . Str::random(4); // Example: "prenomXYZ"
+           $password = $request->nom . Str::random(4); // Example: "prenomXYZ"
            $user = User::create([
                'nom' => $request->nom,
-               'prenom' => $request->prenom,
                'email' => $request->email,
                'password' => Hash::make($password), // Encrypt the password
+               'role'  => 'admin',
                'photo_profile' => $photo_profile, // Store the photo path if available
            ]);
 
+                if ($user) {
+                    Zone::create([
+                    'nom' => $request->nom_equipe,
+                    'localite' => $request->localite,
+                    'user_id' => $request->$user->id,
+                    ]);
+                    }
+
+
 
            // Assign role and promotion if necessary
-           $role = Role::firstOrCreate(['name' => 'zone']);
-           $user->assignRole($role);
+        //    $role = Role::firstOrCreate(['name' => 'admin']);
+        //    $user->assignRole($role);
 
-        //    if ($request->has('promotion_id')) {
-        //        $user->promotions()->attach($request->promotion_id);
-        //    }
 
 
            // Send email notification

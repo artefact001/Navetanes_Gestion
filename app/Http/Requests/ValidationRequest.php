@@ -72,6 +72,7 @@ class EntityRequest extends FormRequest
             'score_local' => ['required', 'integer', 'min:0'],
             'score_visiteur' => ['required', 'integer', 'min:0'],
 
+            
             // Validation pour la table 'tirages'
             'competition_id' => ['required', 'exists:competitions,id'],
             'phase' => ['required', 'json'],
